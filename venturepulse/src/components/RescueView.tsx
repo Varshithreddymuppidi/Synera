@@ -11,8 +11,6 @@ import {
   DollarSign,
   ChevronDown,
   ChevronUp,
-  Sparkles,
-  Eye,
   Building2,
   MapPin,
   Send

@@ -4,7 +4,6 @@ import {
   Send,
   FileText,
   CheckCircle2,
-  ShieldCheck,
   DollarSign,
   ChevronDown,
   ChevronUp,
@@ -12,13 +11,13 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { VenturePulseStore } from '../services/store';
-import { Conversation, InvestmentDeal } from '../types';
+import { Conversation } from '../types';
 
 interface MessagesViewProps {
-  onNavigateTab: (tab: string) => void;
+  onNavigateTab?: (tab: string) => void;
 }
 
-export const MessagesView: React.FC<MessagesViewProps> = ({ onNavigateTab }) => {
+export const MessagesView: React.FC<MessagesViewProps> = () => {
   const store = VenturePulseStore.getInstance();
   const currentUser = store.getCurrentUser();
 

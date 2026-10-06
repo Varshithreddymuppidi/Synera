@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import { 
-  Activity, 
-  Rocket, 
-  Lightbulb, 
-  LifeBuoy, 
-  Briefcase, 
-  Mic2, 
-  Award, 
-  MessageSquare, 
-  LayoutDashboard, 
-  Search, 
-  Bell, 
+import {
+  Activity,
+  Rocket,
+  Lightbulb,
+  LifeBuoy,
+  Briefcase,
+  Mic,
+  Award,
+  MessageSquare,
+  LayoutDashboard,
+  Search,
+  Bell,
   Sparkles,
   ShieldCheck,
   CheckCircle2,
-  AlertTriangle,
-  UserCheck,
   ChevronDown
 } from 'lucide-react';
 import { VenturePulseStore } from '../services/store';
@@ -160,7 +158,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             className={`nav-item ${currentTab === 'creators' ? 'active' : ''}`}
             onClick={() => onSelectTab('creators')}
           >
-            <Mic2 size={16} />
+            <Mic size={16} />
             <span>Creator Connect</span>
           </button>
 

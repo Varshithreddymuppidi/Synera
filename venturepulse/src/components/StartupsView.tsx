@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
-import { 
-  Rocket, 
-  TrendingUp, 
-  ShieldCheck, 
-  Users, 
-  DollarSign, 
-  PieChart, 
-  FileText, 
-  ExternalLink, 
-  CheckCircle2, 
+import {
+  Rocket,
+  ShieldCheck,
+  CheckCircle2,
   Award,
   Sparkles,
-  Send,
-  Building2,
+  FileText,
   ChevronRight
 } from 'lucide-react';
 import { VenturePulseStore } from '../services/store';
@@ -54,8 +47,7 @@ export const StartupsView: React.FC<StartupsViewProps> = ({ onNavigateTab, searc
     if (!showInterestModal) return;
 
     // Send notification to founder
-    store.notifications.unshift({
-      id: `notif-${Date.now()}`,
+    store.addNotification({
       type: 'investment_interest',
       title: `Investment Interest: ${showInterestModal.startupName}`,
       message: `${currentUser.name} (${currentUser.role}) expressed interest to invest ${intentAmount} via ${intentStructure.replace('_', ' ')}.`,
@@ -364,7 +356,7 @@ export const StartupsView: React.FC<StartupsViewProps> = ({ onNavigateTab, searc
                   </label>
                   <select 
                     value={intentStructure} 
-                    onChange={(e) => setIntentStructure(e.target.value as any)}
+                    onChange={(e) => setIntentStructure(e.target.value as typeof intentStructure)}
                   >
                     <option value="convertible_note">Convertible Seed Note (20% discount)</option>
                     <option value="equity">Straight Priced Equity</option>

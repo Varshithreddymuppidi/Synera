@@ -2,32 +2,28 @@ import React, { useState } from 'react';
 import {
   Lightbulb,
   ShieldCheck,
-  CheckCircle2,
   Lock,
   Hash,
   Clock,
   FileText,
   Heart,
   MessageCircle,
-  Send,
-  Bookmark,
   Eye,
   AlertTriangle,
   Download,
   ChevronDown,
   ChevronUp,
-  Sparkles,
-  ExternalLink
+  Sparkles
 } from 'lucide-react';
 import { VenturePulseStore } from '../services/store';
 import { StartupIdea } from '../types';
 
 interface IdeasViewProps {
-  onNavigateTab: (tab: string, targetId?: string) => void;
+  onNavigateTab?: (tab: string, targetId?: string) => void;
   searchQuery: string;
 }
 
-export const IdeasView: React.FC<IdeasViewProps> = ({ onNavigateTab, searchQuery }) => {
+export const IdeasView: React.FC<IdeasViewProps> = ({ searchQuery }) => {
   const store = VenturePulseStore.getInstance();
   const currentUser = store.getCurrentUser();
 
@@ -282,7 +278,7 @@ export const IdeasView: React.FC<IdeasViewProps> = ({ onNavigateTab, searchQuery
                   {/* Actions Bar */}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '14px', borderTop: '1px solid var(--border-subtle)' }}>
                     <div style={{ display: 'flex', gap: '18px', fontSize: '13px', color: 'var(--text-secondary)' }}>
-                      <button onClick={() => { store.ideas = store.ideas.map(i => i.id === idea.id ? { ...i, hasLiked: !i.hasLiked, likesCount: i.hasLiked ? i.likesCount - 1 : i.likesCount + 1 } : i); }} style={{ display: 'flex', alignItems: 'center', gap: '5px', color: idea.hasLiked ? '#ef4444' : 'inherit' }}>
+                      <button onClick={() => store.toggleLikeIdea(idea.id)} style={{ display: 'flex', alignItems: 'center', gap: '5px', color: idea.hasLiked ? '#ef4444' : 'inherit' }}>
                         <Heart size={15} fill={idea.hasLiked ? '#ef4444' : 'none'} /> {idea.likesCount}
                       </button>
                       <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -421,7 +417,7 @@ export const IdeasView: React.FC<IdeasViewProps> = ({ onNavigateTab, searchQuery
                   </div>
                   <div>
                     <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Development Stage</label>
-                    <select value={ideaStage} onChange={e => setIdeaStage(e.target.value as any)}>
+                    <select value={ideaStage} onChange={e => setIdeaStage(e.target.value as StartupIdea['stage'])}>
                       <option value="Concept Stage">Concept Stage</option>
                       <option value="Validation Stage">Validation Stage</option>
                       <option value="Prototype Design">Prototype Design</option>
@@ -432,6 +428,11 @@ export const IdeasView: React.FC<IdeasViewProps> = ({ onNavigateTab, searchQuery
                 <div>
                   <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Tags (comma separated)</label>
                   <input value={ideaTags} onChange={e => setIdeaTags(e.target.value)} placeholder="AI, SaaS, B2B, Rural" />
+                </div>
+
+                <div>
+                  <label style={{ fontSize: '13px', fontWeight: 600, display: 'block', marginBottom: '4px' }}>Location</label>
+                  <input value={ideaLocation} onChange={e => setIdeaLocation(e.target.value)} placeholder="City / Region" />
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

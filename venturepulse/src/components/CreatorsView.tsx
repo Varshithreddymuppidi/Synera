@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
 import {
-  Mic2,
+  Mic,
   Star,
   Users,
-  Eye,
   CheckCircle2,
-  ShieldCheck,
-  Instagram,
-  Youtube,
-  Linkedin,
-  Twitter,
   Globe,
+  Play,
+  Camera,
+  Briefcase,
+  AtSign,
   Send,
   ChevronDown,
   ChevronUp,
-  Sparkles,
-  Filter
+  Sparkles
 } from 'lucide-react';
 import { VenturePulseStore } from '../services/store';
-import { CreatorProfile, CreatorCampaign } from '../types';
+import { CreatorCampaign } from '../types';
 
 interface CreatorsViewProps {
   onNavigateTab: (tab: string, targetId?: string) => void;
@@ -57,10 +54,10 @@ export const CreatorsView: React.FC<CreatorsViewProps> = ({ onNavigateTab, searc
 
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
-      case 'YouTube': return <Youtube size={14} color="#ef4444" />;
-      case 'LinkedIn': return <Linkedin size={14} color="#0a66c2" />;
-      case 'Instagram': return <Instagram size={14} color="#e1306c" />;
-      case 'X': return <Twitter size={14} color="#1da1f2" />;
+      case 'YouTube': return <Play size={14} color="#ef4444" />;
+      case 'LinkedIn': return <Briefcase size={14} color="#0a66c2" />;
+      case 'Instagram': return <Camera size={14} color="#e1306c" />;
+      case 'X': return <AtSign size={14} color="#1da1f2" />;
       default: return <Globe size={14} color="var(--text-secondary)" />;
     }
   };
@@ -93,7 +90,7 @@ export const CreatorsView: React.FC<CreatorsViewProps> = ({ onNavigateTab, searc
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: '16px' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ec4899', fontSize: '13px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '6px' }}>
-            <Mic2 size={15} /> Creator Connect Marketplace
+            <Mic size={15} /> Creator Connect Marketplace
           </div>
           <h1 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '8px' }}>Creator Connect</h1>
           <p style={{ color: 'var(--text-secondary)', maxWidth: '700px', fontSize: '14px', lineHeight: 1.6 }}>
@@ -102,7 +99,7 @@ export const CreatorsView: React.FC<CreatorsViewProps> = ({ onNavigateTab, searc
         </div>
         {(currentUser.role === 'business_owner' || currentUser.role === 'startup_founder') && (
           <button className="btn btn-primary btn-lg" onClick={() => setShowCreateCampaign(true)} style={{ background: 'var(--grad-creator)', boxShadow: '0 4px 14px rgba(236,72,153,0.35)' }}>
-            <Mic2 size={18} /> Post Campaign Request
+            <Mic size={18} /> Post Campaign Request
           </button>
         )}
       </div>

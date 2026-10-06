@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Briefcase,
-  ShieldCheck,
   CheckCircle2,
   AlertTriangle,
   TrendingUp,
@@ -9,12 +8,9 @@ import {
   FileText,
   MapPin,
   Building2,
-  Sparkles,
-  Filter,
-  Tag
+  Filter
 } from 'lucide-react';
 import { VenturePulseStore } from '../services/store';
-import { InvestmentOpportunity } from '../types';
 
 interface OpportunitiesViewProps {
   onNavigateTab: (tab: string, targetId?: string) => void;
@@ -26,6 +22,8 @@ export const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ onNavigate
 
   const [activeFilter, setActiveFilter] = useState<'all' | 'startup' | 'business_rescue' | 'growth_company' | 'small_business'>('all');
   const [riskFilter, setRiskFilter] = useState<'all' | 'High Risk' | 'Medium Risk' | 'Lower Risk'>('all');
+
+  const riskOptions: Array<typeof riskFilter> = ['all', 'Lower Risk', 'Medium Risk', 'High Risk'];
 
   const filteredOpps = store.opportunities.filter(opp => {
     if (activeFilter !== 'all' && opp.entityType !== activeFilter) return false;
@@ -95,14 +93,16 @@ export const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ onNavigate
         <span style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px', marginRight: '6px' }}>
           <Filter size={13} /> Type:
         </span>
-        {[
-          { id: 'all', label: 'All' },
-          { id: 'startup', label: 'Startups' },
-          { id: 'business_rescue', label: 'Business Rescue' },
-          { id: 'growth_company', label: 'Growth Company' },
-          { id: 'small_business', label: 'Small Business' },
-        ].map(f => (
-          <button key={f.id} className={`persona-pill ${activeFilter === f.id ? 'active' : ''}`} onClick={() => setActiveFilter(f.id as any)}>
+        {(
+          [
+            { id: 'all', label: 'All' },
+            { id: 'startup', label: 'Startups' },
+            { id: 'business_rescue', label: 'Business Rescue' },
+            { id: 'growth_company', label: 'Growth Company' },
+            { id: 'small_business', label: 'Small Business' },
+          ] as { id: typeof activeFilter; label: string }[]
+        ).map(f => (
+          <button key={f.id} className={`persona-pill ${activeFilter === f.id ? 'active' : ''}`} onClick={() => setActiveFilter(f.id)}>
             {f.label}
           </button>
         ))}
@@ -111,8 +111,8 @@ export const OpportunitiesView: React.FC<OpportunitiesViewProps> = ({ onNavigate
         <span style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px', marginRight: '6px' }}>
           Risk:
         </span>
-        {['all', 'Lower Risk', 'Medium Risk', 'High Risk'].map(f => (
-          <button key={f} className={`persona-pill ${riskFilter === f ? 'active' : ''}`} onClick={() => setRiskFilter(f as any)}>
+        {riskOptions.map(f => (
+          <button key={f} className={`persona-pill ${riskFilter === f ? 'active' : ''}`} onClick={() => setRiskFilter(f)}>
             {f === 'all' ? 'All Risks' : f}
           </button>
         ))}

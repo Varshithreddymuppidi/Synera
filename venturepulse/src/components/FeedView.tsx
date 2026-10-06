@@ -11,10 +11,9 @@ import {
   LifeBuoy, 
   Sparkles, 
   Rocket, 
-  Mic2, 
+  Mic, 
   Plus, 
   ExternalLink,
-  Tag,
   AlertCircle
 } from 'lucide-react';
 import { VenturePulseStore } from '../services/store';
@@ -99,7 +98,7 @@ export const FeedView: React.FC<FeedViewProps> = ({ onNavigateTab, searchQuery }
       case 'startup_idea':
         return <span className="badge" style={{ background: 'rgba(168, 85, 247, 0.15)', color: '#c084fc', border: '1px solid rgba(168,85,247,0.3)' }}><Sparkles size={11} /> Startup Idea Pitch</span>;
       case 'creator_collab':
-        return <span className="badge" style={{ background: 'rgba(236, 72, 153, 0.15)', color: '#f472b6', border: '1px solid rgba(236,72,153,0.3)' }}><Mic2 size={11} /> Creator Campaign</span>;
+        return <span className="badge" style={{ background: 'rgba(236, 72, 153, 0.15)', color: '#f472b6', border: '1px solid rgba(236,72,153,0.3)' }}><Mic size={11} /> Creator Campaign</span>;
       case 'success_story':
         return <span className="badge badge-verified"><ShieldCheck size={11} /> Verified Outcome</span>;
       default:
@@ -167,25 +166,27 @@ export const FeedView: React.FC<FeedViewProps> = ({ onNavigateTab, searchQuery }
               className="btn btn-secondary btn-sm"
               onClick={() => { setNewPostType('creator_collab'); setShowCreateModal(true); }}
             >
-              <Mic2 size={13} color="#ec4899" /> Creator Collab
+              <Mic size={13} color="#ec4899" /> Creator Collab
             </button>
           </div>
         </div>
 
         {/* Filter Pills */}
         <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '14px', marginBottom: '16px' }}>
-          {[
-            { id: 'all', label: 'All Updates' },
-            { id: 'updates', label: 'Company News' },
-            { id: 'funding', label: 'Funding Requests' },
-            { id: 'rescue', label: 'Business Rescue' },
-            { id: 'ideas', label: 'Startup Ideas' },
-            { id: 'collabs', label: 'Creator Campaigns' },
-            { id: 'stories', label: 'Verified Outcomes' }
-          ].map(f => (
+          {(
+            [
+              { id: 'all', label: 'All Updates' },
+              { id: 'updates', label: 'Company News' },
+              { id: 'funding', label: 'Funding Requests' },
+              { id: 'rescue', label: 'Business Rescue' },
+              { id: 'ideas', label: 'Startup Ideas' },
+              { id: 'collabs', label: 'Creator Campaigns' },
+              { id: 'stories', label: 'Verified Outcomes' }
+            ] as { id: typeof activeFilter; label: string }[]
+          ).map(f => (
             <button
               key={f.id}
-              onClick={() => setActiveFilter(f.id as any)}
+              onClick={() => setActiveFilter(f.id)}
               className={`persona-pill ${activeFilter === f.id ? 'active' : ''}`}
               style={{ padding: '6px 14px', fontSize: '13px' }}
             >
@@ -485,7 +486,7 @@ export const FeedView: React.FC<FeedViewProps> = ({ onNavigateTab, searchQuery }
                   <label style={{ fontSize: '13px', fontWeight: 600, marginBottom: '6px', display: 'block' }}>Category</label>
                   <select 
                     value={newPostType} 
-                    onChange={(e) => setNewPostType(e.target.value as any)}
+                    onChange={(e) => setNewPostType(e.target.value as SocialPost['postType'])}
                   >
                     <option value="business_update">Company / Operating Update</option>
                     <option value="funding_request">Funding Request / Pitch</option>

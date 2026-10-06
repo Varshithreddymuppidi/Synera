@@ -330,6 +330,33 @@ export class VenturePulseStore {
     this.notify();
   }
 
+  public toggleLikeIdea(ideaId: string): void {
+    this.ideas = this.ideas.map((i) => {
+      if (i.id === ideaId) {
+        const hasLiked = !i.hasLiked;
+        return {
+          ...i,
+          hasLiked,
+          likesCount: hasLiked ? i.likesCount + 1 : Math.max(0, i.likesCount - 1),
+        };
+      }
+      return i;
+    });
+    setStored('ideas', this.ideas);
+    this.notify();
+  }
+
+  public addNotification(item: Omit<NotificationItem, 'id' | 'timestamp'> & { id?: string; timestamp?: string }): void {
+    const notif: NotificationItem = {
+      timestamp: 'Just now',
+      id: `notif-${Date.now()}`,
+      ...item,
+    };
+    this.notifications.unshift(notif);
+    setStored('notifications', this.notifications);
+    this.notify();
+  }
+
   public expressInterestInIdea(ideaId: string): void {
     this.ideas = this.ideas.map(i => {
       if (i.id === ideaId) {
@@ -340,17 +367,13 @@ export class VenturePulseStore {
     setStored('ideas', this.ideas);
 
     const currentUser = this.getCurrentUser();
-    this.notifications.unshift({
-      id: `notif-${Date.now()}`,
+    this.addNotification({
       type: 'investment_interest',
       title: 'Interest Expressed in Idea',
       message: `${currentUser.name} expressed interest in discussing terms for your idea.`,
-      timestamp: 'Just now',
       read: false,
       targetView: 'ideas'
     });
-    setStored('notifications', this.notifications);
-    this.notify();
   }
 
   // --- BUSINESS RESCUE ---

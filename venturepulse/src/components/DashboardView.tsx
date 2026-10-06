@@ -1,17 +1,15 @@
 import React from 'react';
 import {
-  LayoutDashboard,
   TrendingUp,
   Users,
   Eye,
-  DollarSign,
   FileText,
   Star,
   Award,
   ShieldCheck,
   CheckCircle2,
   Briefcase,
-  Mic2,
+  Mic,
   LifeBuoy,
   Target,
   BarChart3,
@@ -34,7 +32,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNavigateTab }) =
   const creator = store.creators.find(c => c.userId === currentUser.id);
 
   // Stat card helper
-  const StatCard = ({ label, value, color, icon: Icon, subtext }: { label: string; value: string | number; color: string; icon: any; subtext?: string }) => (
+  const StatCard = ({ label, value, color, icon: Icon, subtext }: { label: string; value: string | number; color: string; icon: React.ComponentType<{ size?: number | string; color?: string }>; subtext?: string }) => (
     <div className="glass-card" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '16px' }}>
       <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius-md)', background: `${color}15`, border: `1px solid ${color}30`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Icon size={24} color={color} />
@@ -147,7 +145,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNavigateTab }) =
           <StatCard label="Total Reach" value={creator.totalReach.split('+')[0] + '+'} color="#ec4899" icon={Users} />
           <StatCard label="Campaigns Completed" value={creator.previousCampaigns.length} color="#818cf8" icon={Target} />
           <StatCard label="Creator Rating" value={`${creator.rating}/5`} color="#fbbf24" icon={Star} subtext={`${creator.reviewsCount} reviews`} />
-          <StatCard label="Active Platforms" value={creator.platforms.length} color="#06b6d4" icon={Mic2} />
+          <StatCard label="Active Platforms" value={creator.platforms.length} color="#06b6d4" icon={Mic} />
         </div>
 
         {/* Previous Campaigns Performance */}
@@ -279,7 +277,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onNavigateTab }) =
           <LifeBuoy size={16} /> Business Rescue Portal
         </button>
         <button className="btn btn-secondary" style={{ width: '100%', padding: '14px' }} onClick={() => onNavigateTab('creators')}>
-          <Mic2 size={16} /> Find Creators
+          <Mic size={16} /> Find Creators
         </button>
       </div>
     </div>
